@@ -1,0 +1,19 @@
+{
+  "name": "blockchain-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "yarn workspace @blockchain-platform/frontend dev",
+    "dev:admin": "yarn workspace @blockchain-platform/admin dev",
+    "dev:backend": "yarn workspace @blockchain-platform/backend dev",
+    "build": "yarn workspaces run build",
+    "start": "yarn workspace @blockchain-platform/backend start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "typescript": "^5.2.2"
+  }
+} 
