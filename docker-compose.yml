@@ -48,6 +48,19 @@ services:
       - FRONTEND_URL=http://localhost:3000
       - ADMIN_URL=http://localhost:3002
       - UPLOADS_DIR=/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: >
+      sh -c "
+        echo 'Waiting for PostgreSQL to be ready...' &&
+        until nc -z postgres 5432; do sleep 1; done &&
+        echo 'PostgreSQL is ready!' &&
+        npx prisma migrate deploy &&
+        yarn workspace @blockchain-platform/backend start
+      "
     volumes:
       - uploads:/app/uploads
     networks:
